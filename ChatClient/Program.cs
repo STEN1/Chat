@@ -57,6 +57,4 @@ namespace ChatClient
             Console.WriteLine(s);
         }
     }
-
-
 }
