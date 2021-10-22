@@ -4,14 +4,13 @@ using System.Text;
 
 namespace ChatClient
 {
+    public delegate void RECEVE_CALLBACK(IntPtr msg, int len);
     class ChatNative
     {
         [DllImport("Chat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int NativeInit();
         [DllImport("Chat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeSend(StringBuilder msg, int len);
-
-        public delegate void RECEVE_CALLBACK(IntPtr msg, int len);
         [DllImport("Chat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeSetReceveCallback(RECEVE_CALLBACK callback);
         [DllImport("Chat.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -33,6 +32,7 @@ namespace ChatClient
         {
             NativeShutdown();
         }
+
     }
 
     class Program
@@ -41,17 +41,25 @@ namespace ChatClient
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine(ChatNative.Init().ToString());
-            ChatNative.SetReceveCallback(ReceveCallback);
-            string msg = "";
-            while (msg != "exit")
+            RECEVE_CALLBACK callbackDelegate = null;
+            callbackDelegate += ReceveCallback;
+            callbackDelegate += ReceveCallback2;
+            ChatNative.SetReceveCallback(callbackDelegate);
+            string msg = "Started";
+            while (msg != "q")
             {
-                msg = Console.ReadLine();
                 ChatNative.Send(msg);
+                msg = Console.ReadLine();
             }
             ChatNative.Shutdown();
         }
 
         static void ReceveCallback(IntPtr msg, int len)
+        {
+            string s = Marshal.PtrToStringAnsi(msg, len);
+            Console.WriteLine(s);
+        }
+        static void ReceveCallback2(IntPtr msg, int len)
         {
             string s = Marshal.PtrToStringAnsi(msg, len);
             Console.WriteLine(s);

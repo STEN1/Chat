@@ -5,6 +5,7 @@
 
 std::function<void(const char*, int)> rCallback;
 std::thread* t;
+bool run = true;
 
 extern "C" __declspec(dllexport) int NativeInit()
 {
@@ -20,9 +21,9 @@ extern "C" __declspec(dllexport) void NativeSend(char* msg, int len)
 
 void Receve()
 {
-	while (true)
+	while (run)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::seconds(2));
 		std::string msg = "RECEVE UWU";
 		rCallback(msg.c_str(), (int)msg.size());
 	}
@@ -36,6 +37,7 @@ extern "C" __declspec(dllexport) void NativeSetReceveCallback(void callback(cons
 
 extern "C" __declspec(dllexport) void NativeShutdown()
 {
+	run = false;
 	t->join();
 	delete t;
 }
