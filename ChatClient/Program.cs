@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ChatClient
 {
     public delegate void RECEVE_CALLBACK(IntPtr msg, int len);
-    class ChatNative
+    public class ChatNative
     {
         [DllImport("Chat.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int NativeInit();
@@ -37,32 +41,29 @@ namespace ChatClient
 
     class Program
     {
+
+        [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Chat client");
             Console.WriteLine(ChatNative.Init().ToString());
             RECEVE_CALLBACK callbackDelegate = null;
             callbackDelegate += ReceveCallback;
-            callbackDelegate += ReceveCallback2;
             ChatNative.SetReceveCallback(callbackDelegate);
-            string msg = "Started";
-            while (msg != "q")
-            {
-                ChatNative.Send(msg);
-                msg = Console.ReadLine();
-            }
-            ChatNative.Shutdown();
+            string msg = "Connected";
+            ChatNative.Send(msg);
+
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
         }
 
         static void ReceveCallback(IntPtr msg, int len)
         {
             string s = Marshal.PtrToStringAnsi(msg, len);
-            Console.WriteLine(s);
-        }
-        static void ReceveCallback2(IntPtr msg, int len)
-        {
-            string s = Marshal.PtrToStringAnsi(msg, len);
-            Console.WriteLine(s);
+            Console.WriteLine("From server: {0}", s);
+
         }
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chat", "Chat\Chat.vcxproj", "{C23718D4-D38E-4A7B-8F2B-FEF029B60363}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatClient", "ChatClient\ChatClient.csproj", "{2DBD927E-65AD-469C-AF52-12A3008CC89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatClient", "ChatClient\ChatClient.csproj", "{2DBD927E-65AD-469C-AF52-12A3008CC89A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C23718D4-D38E-4A7B-8F2B-FEF029B60363} = {C23718D4-D38E-4A7B-8F2B-FEF029B60363}
 	EndProjectSection
