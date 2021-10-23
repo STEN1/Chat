@@ -133,11 +133,14 @@ extern "C" __declspec(dllexport) void NativeSetReceveCallback(void callback(cons
 
 extern "C" __declspec(dllexport) void NativeShutdown()
 {
-	run = false;
-	closesocket(ConnectSocket);
-	t->join();
-	delete t;
-	shutdown(ConnectSocket, SD_SEND);
-	WSACleanup();
-	std::cout << "Cpp cleanup\n";
+	if (run)
+	{
+		run = false;
+		closesocket(ConnectSocket);
+		t->join();
+		delete t;
+		shutdown(ConnectSocket, SD_SEND);
+		WSACleanup();
+		std::cout << "Cpp cleanup\n";
+	}
 }
