@@ -139,4 +139,5 @@ extern "C" __declspec(dllexport) void NativeShutdown()
 	delete t;
 	shutdown(ConnectSocket, SD_SEND);
 	WSACleanup();
+	std::cout << "Cpp cleanup\n";
 }

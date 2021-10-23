@@ -41,7 +41,7 @@ namespace ChatClient
 
     class Program
     {
-
+        private static Form1 form = null;
         [STAThread]
         static void Main(string[] args)
         {
@@ -56,14 +56,15 @@ namespace ChatClient
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            form = new Form1();
+            Application.Run(form);
         }
 
         static void ReceveCallback(IntPtr msg, int len)
         {
             string s = Marshal.PtrToStringAnsi(msg, len);
             Console.WriteLine("From server: {0}", s);
-
+            form.OnReceveMsg(s);
         }
     }
 }
