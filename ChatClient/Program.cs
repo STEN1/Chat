@@ -45,18 +45,18 @@ namespace ChatClient
         [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("Chat client");
-            Console.WriteLine(ChatNative.Init().ToString());
-            RECEVE_CALLBACK callbackDelegate = null;
-            callbackDelegate += ReceveCallback;
-            ChatNative.SetReceveCallback(callbackDelegate);
-            string msg = "Connected";
-            ChatNative.Send(msg);
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             form = new Form1();
+            Console.WriteLine("Chat client");
+            Console.WriteLine(ChatNative.Init().ToString());
+            RECEVE_CALLBACK callbackDelegate = null;
+            callbackDelegate += ReceveCallback;
+            ChatNative.SetReceveCallback(callbackDelegate);
+            //string msg = "Connected";
+            //ChatNative.Send(msg);
             Application.Run(form);
         }
 

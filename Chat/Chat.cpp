@@ -17,7 +17,7 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 #define DEFAULT_BUFLEN 512
-#define DEFAULT_IP "87.248.13.40"
+#define DEFAULT_IP "localhost"
 #define DEFAULT_PORT "27015"
 
 WSADATA wsaData;
